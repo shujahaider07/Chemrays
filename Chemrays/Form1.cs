@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Chemrays
@@ -21,6 +22,10 @@ namespace Chemrays
         {
             style();
             getnames();
+
+
+
+
         }
 
         public void bindGridView()
@@ -76,6 +81,8 @@ namespace Chemrays
         {
             nametxt.Focus();
             bindGridView();
+            getnames();
+
 
         }
 
@@ -90,6 +97,7 @@ namespace Chemrays
             balancesalarytxt.Text = "";
             totalloantxt.Text = "";
             balancesalarycftxt.Text = "";
+            textBox2.Text = "";
         }
 
         public void getsalaries()
@@ -159,7 +167,7 @@ namespace Chemrays
 
         private void nametxt_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
 
             getsalaries();
             advanceloan();
@@ -447,7 +455,7 @@ namespace Chemrays
             }
         }
 
-      
+
 
         private void previousbalanceloantxt_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -538,5 +546,67 @@ namespace Chemrays
                 e.Handled = true;
             }
         }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            SqlConnection sql = new SqlConnection(cs);
+            string qry = "SELECT * from sheet WHERE name LIKE '%" + textBox3.Text + "%' ";
+            SqlDataAdapter da = new SqlDataAdapter (qry, sql);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+           
+        }
+
+        private void addEmployeesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddEmployees ad = new AddEmployees();
+            ad.ShowDialog();
+            
+        }
+
+        private void calculatorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            Process.Start("C://Windows//System32/calc.exe");
+        }
+
+        private void deleteEmployeesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            deleteEmplyees de = new deleteEmplyees();
+            de.ShowDialog();
+        }
+
+        //public void SumGridView()
+        //    {
+        //        SqlConnection sql = new SqlConnection(cs);
+        //        sql.Open();
+
+        //        String qry = "select sum(balancesalary) from sheet ";
+        //        SqlCommand cmd = new SqlCommand(qry,sql);
+        //        SqlDataReader dr = cmd.ExecuteReader();
+        //        while (dr.Read())
+        //        {
+        //            label9.Text = (dr[0].ToString());
+        //        }
+        //        sql.Close();
+
+        //    }
+
     }
 }
